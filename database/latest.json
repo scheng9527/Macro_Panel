@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-03-14 16:53:05",
+  "date": "2026-03-14",
+  "raw_data": {
+    "metrics": {
+      "dix": 0.4422691793544434,
+      "gex": 100977975.2800002,
+      "vix": 27.190000534057617,
+      "skew": 137.75999450683594
+    },
+    "polymarket": [
+      {
+        "title": "Club Puebla vs. Club León FC",
+        "top_outcome": "0"
+      },
+      {
+        "title": "FC Juárez vs. Club Tijuana",
+        "top_outcome": "0"
+      },
+      {
+        "title": "BNB Up or Down - March 15, 5:00AM-5:15AM ET",
+        "top_outcome": "["
+      },
+      {
+        "title": "Sarpsborg 08 FF vs. FK Bodø/Glimt - More Markets",
+        "top_outcome": "["
+      },
+      {
+        "title": "Will Trump try to acquire part of Alberta?",
+        "top_outcome": "["
+      }
+    ]
+  },
+  "ai_analysis": null
+}
