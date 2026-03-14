@@ -1,0 +1,47 @@
+name: Daily Macro Data Fetcher
+
+# 触发器：什么情况下运行这个脚本？
+on:
+  schedule:
+    # 每天 UTC 时间 21:00 (也就是北京/台北时间凌晨 5:00) 自动跑一次，为你准备早报
+    - cron: '0 21 * * *'
+  # 加上这个魔法开关：允许你在网页上手动点一个按钮来随时运行测试！
+  workflow_dispatch: 
+
+# 权限：允许机器人把抓取到的数据写回你的仓库
+permissions:
+  contents: write
+
+jobs:
+  run-engine:
+    runs-on: ubuntu-latest # 使用 GitHub 免费提供的最新版 Linux 服务器
+
+    steps:
+      - name: 1. 拉取仓库代码
+        uses: actions/checkout@v4
+
+      - name: 2. 安装 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 3. 安装依赖库 (yfinance, pandas等)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 4. 运行你的战情室引擎！
+        run: python engine.py
+
+      - name: 5. 归档数据并推送到仓库
+        run: |
+          # 告诉 GitHub 这个机器人是谁
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 把生成的 database 文件夹加入暂存区
+          git add database/
+          
+          # 如果数据有更新，就提交并推送；如果没有更新就不报错跳过
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update: Macro Data & Polymarket [skip ci]"
+          git push
